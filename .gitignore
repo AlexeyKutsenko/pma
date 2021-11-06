@@ -1,0 +1,8 @@
+# MacOS
+.DS_Store
+
+# PyCharm
+.idea
+
+# tests
+.coverage
