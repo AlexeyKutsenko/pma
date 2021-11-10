@@ -1,5 +1,6 @@
 from pma.domain.stock import Stock
 
+
 class MemRepo:
     def __init__(self, data):
         self.data = data

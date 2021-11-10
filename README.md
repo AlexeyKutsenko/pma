@@ -1,4 +1,4 @@
 Testing with covering
 ```
-pytest -svv --cov=rentomatic --cov-report=term-missing
+pytest -svv --cov=pma --cov-report=term-missing
 ```
