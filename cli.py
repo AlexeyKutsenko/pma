@@ -2,8 +2,11 @@
 
 from pma.repository.memrepo import MemRepo
 from pma.use_cases.stock_list import stock_list_use_case
+from pma.requests.stock_list import build_stock_list_request
+from tests.fixtures.stocks import raw_stock_dicts
 
-repo = MemRepo([])
-result = stock_list_use_case(repo)
+request = build_stock_list_request()
+repo = MemRepo(raw_stock_dicts)
+result = stock_list_use_case(repo, request)
 
-print(result)
+print([stock.to_dict() for stock in result.value])
