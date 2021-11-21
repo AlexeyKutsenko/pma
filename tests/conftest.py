@@ -2,6 +2,7 @@ import pytest
 from fastapi.testclient import TestClient
 
 from application.app import create_app
+from manage import read_json_configuration
 # noinspection PyUnresolvedReferences
 from .fixtures.stocks import domain_stocks, stock_dicts
 
@@ -11,6 +12,11 @@ def client():
     app = create_app('testing')
     client = TestClient(app)
     return client
+
+
+@pytest.fixture(scope="session")
+def app_configuration():
+    return read_json_configuration("testing")
 
 
 def pytest_addoption(parser):
