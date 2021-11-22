@@ -6,3 +6,6 @@
 
 # tests
 .coverage
+
+# caches
+__pycache__

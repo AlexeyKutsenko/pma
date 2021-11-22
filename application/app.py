@@ -6,7 +6,7 @@ from fastapi import FastAPI
 from application.rest import stock
 
 
-def create_app(config_name):
+def create_app():
     app = FastAPI()
 
     app.include_router(stock.router)
