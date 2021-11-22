@@ -9,3 +9,6 @@
 
 # caches
 __pycache__
+
+# config
+config/*
