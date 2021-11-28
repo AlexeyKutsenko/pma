@@ -1,7 +1,6 @@
 from sqlalchemy import Column, Integer, Float, String
-from sqlalchemy.ext.declarative import declarative_base
 
-Base = declarative_base()
+from pma.repository.sqlalchemy.base_class import Base
 
 
 class Stock(Base):

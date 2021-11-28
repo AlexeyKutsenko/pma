@@ -1,3 +1,4 @@
 -r test.txt
+alembic==1.7.5
 pip==21.3.1
 pylint==2.11.1
