@@ -131,6 +131,7 @@ def init_postgres():
 @cli.command()
 @click.argument('args', nargs=-1)
 def test(args):
+    os.environ['FASTAPI_ENV'] = 'testing'
     os.environ['APPLICATION_CONFIG'] = 'testing'
     configure_app(os.getenv('APPLICATION_CONFIG'))
 

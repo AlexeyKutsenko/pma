@@ -2,7 +2,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
 from pma.domain import stock
-from pma.repository.postgres_objects import Base, Stock
+from pma.repository.sqlalchemy import Stock
 
 
 class PostgresRepo:
@@ -16,8 +16,6 @@ class PostgresRepo:
         )
 
         self.engine = create_engine(connection_string)
-        Base.metadata.create_all(self.engine)
-        Base.metadata.bind = self.engine
 
     def _create_stock_objects(self, results):
         return [
@@ -42,13 +40,13 @@ class PostgresRepo:
 
         if 'code__eq' in filters:
             query = query.filter(Stock.code == filters['code__eq'])
-            
+
         if 'price__eq' in filters:
             query = query.filter(Stock.price == filters['price__eq'])
-            
+
         if 'price__lt' in filters:
             query = query.filter(Stock.price < filters['price__lt'])
-            
+
         if 'price__gt' in filters:
             query = query.filter(Stock.price > filters['price__gt'])
 

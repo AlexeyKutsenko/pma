@@ -9,7 +9,7 @@ from .fixtures.stocks import domain_stocks, stock_dicts
 
 @pytest.fixture
 def client():
-    app = create_app('testing')
+    app = create_app()
     client = TestClient(app)
     return client
 
