@@ -1,7 +1,7 @@
 import sqlalchemy
 import pytest
 
-from pma.repository.postgres_objects import Base, Stock
+from pma.repository.sqlalchemy import Base, Stock
 from tests.fixtures.stocks import raw_stock_dicts
 
 
