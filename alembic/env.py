@@ -18,9 +18,9 @@ fileConfig(config.config_file_name)
 # for 'autogenerate' support
 # from myapp import mymodel
 # target_metadata = mymodel.Base.metadata
-from pma.repository import sqlalchemy
+from pma.repository import orm
 
-target_metadata = sqlalchemy.Base.metadata
+target_metadata = orm.Base.metadata
 
 # other values from the config, defined by the needs of env.py,
 # can be acquired:

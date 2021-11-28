@@ -19,6 +19,6 @@ SQLALCHEMY_DATABASE_URI = "postgresql+psycopg2://{}:{}@{}:{}/{}".format(
     configuration["APPLICATION_DB"],
 )
 
-engine = create_engine(SQLALCHEMY_DATABASE_URI, connect_args={"check_same_thread": False})
+engine = create_engine(SQLALCHEMY_DATABASE_URI)
 
 DBSession = sessionmaker(autocommit=False, autoflush=False, bind=engine)
