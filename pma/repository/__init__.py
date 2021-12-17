@@ -1,5 +1,5 @@
 from pma import domain
-from pma.repository.orm import Stock
+from pma.repository import orm
 from pma.repository.repos import RepoFactory
 
 

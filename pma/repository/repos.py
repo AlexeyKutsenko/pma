@@ -1,8 +1,5 @@
 from dataclasses import fields
 
-from pma import domain
-from pma.domain import stock
-from pma.repository import orm
 from pma.repository.orm.session import DBSession
 
 
@@ -12,6 +9,17 @@ class RepoFactory:
         self.orm_class = orm_class
         self.attributes = [field.name for field in fields(self.domain_class)]
         self.session = DBSession()
+
+    def _apply_filters(self, query, filters):
+        for field__op, value in filters.items():
+            field, op = field__op.split('__')
+            if op == 'eq':
+                query = query.filter(getattr(self.orm_class, field) == value)
+            elif op == 'lt':
+                query = query.filter(getattr(self.orm_class, field) < value)
+            elif op == 'gt':
+                query = query.filter(getattr(self.orm_class, field) > value)
+        return query
 
     def _create_objects(self, results):
         return [
@@ -26,26 +34,6 @@ class RepoFactory:
 
         if filters is None:
             return self._create_objects(query.all())
+        query = self._apply_filters(query, filters)
 
-
-
-# class PostgresRepo:
-#     def list(self, filters=None):
-#         session = DBSession()
-#
-#         if filters is None:
-#             return self._create_stock_objects(query.all())
-#
-#         if 'code__eq' in filters:
-#             query = query.filter(Stock.code == filters['code__eq'])
-#
-#         if 'price__eq' in filters:
-#             query = query.filter(Stock.price == filters['price__eq'])
-#
-#         if 'price__lt' in filters:
-#             query = query.filter(Stock.price < filters['price__lt'])
-#
-#         if 'price__gt' in filters:
-#             query = query.filter(Stock.price > filters['price__gt'])
-#
-#         return self._create_stock_objects(query.all())
+        return self._create_objects(query.all())
