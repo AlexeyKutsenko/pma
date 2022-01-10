@@ -1,12 +1,12 @@
 import pytest
 
-from pma.repository import postgresrepo
+from pma.repository import RepositoryRegistry
 
 pytestmark = pytest.mark.integration
 
 
 def test_repository_list_without_parameters(app_configuration, pg_session, pg_test_data):
-    repo = postgresrepo.PostgresRepo(app_configuration)
+    repo = RepositoryRegistry.get_for('stock')
 
     repo_stocks = repo.list()
 
@@ -14,7 +14,7 @@ def test_repository_list_without_parameters(app_configuration, pg_session, pg_te
 
 
 def test_repository_list_with_code_equal_filter(app_configuration, pg_session, pg_test_data):
-    repo = postgresrepo.PostgresRepo(app_configuration)
+    repo = RepositoryRegistry.get_for('stock')
 
     repo_stocks = repo.list(filters={'code__eq': 'f853578c-fc0f-4e65-81b8-566c5dffa35a'})
 
@@ -23,7 +23,7 @@ def test_repository_list_with_code_equal_filter(app_configuration, pg_session, p
 
 
 def test_repository_list_with_price_equal_filter(app_configuration, pg_session, pg_test_data):
-    repo = postgresrepo.PostgresRepo(app_configuration)
+    repo = RepositoryRegistry.get_for('stock')
 
     repo_stocks = repo.list(filters={'price__eq': 557.80})
 
@@ -32,7 +32,7 @@ def test_repository_list_with_price_equal_filter(app_configuration, pg_session, 
 
 
 def test_repository_list_with_price_less_than_filter(app_configuration, pg_session, pg_test_data):
-    repo = postgresrepo.PostgresRepo(app_configuration)
+    repo = RepositoryRegistry.get_for('stock')
 
     repo_stocks = repo.list(filters={'price__lt': 200})
 
@@ -44,7 +44,7 @@ def test_repository_list_with_price_less_than_filter(app_configuration, pg_sessi
 def test_repository_list_with_price_greater_than_filter(
         app_configuration, pg_session, pg_test_data
 ):
-    repo = postgresrepo.PostgresRepo(app_configuration)
+    repo = RepositoryRegistry.get_for('stock')
 
     repo_stocks = repo.list(filters={'price__gt': 200})
 
@@ -54,7 +54,7 @@ def test_repository_list_with_price_greater_than_filter(
 
 
 def test_repository_list_with_price_between_filter(app_configuration, pg_session, pg_test_data):
-    repo = postgresrepo.PostgresRepo(app_configuration)
+    repo = RepositoryRegistry.get_for('stock')
 
     repo_stocks = repo.list(filters={'price__lt': 200, 'price__gt': 100})
 

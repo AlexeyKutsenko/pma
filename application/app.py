@@ -8,14 +8,12 @@ from application.rest import stock
 
 def create_app():
     app = FastAPI()
-
     app.include_router(stock.router)
-
     return app
 
 
 @lru_cache()
-def get_settings(config_name):
+def get_settings(config_name=''):
     config = import_module('application.config')
     settings = getattr(config, f'{config_name.capitalize()}Config')
-    return settings
+    return settings()

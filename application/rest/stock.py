@@ -1,10 +1,9 @@
-import os
 from typing import List
 
 from fastapi import APIRouter, Request
 
 from application.models.stock import StockModel
-from pma.repository.postgresrepo import PostgresRepo
+from pma.repository import RepositoryRegistry
 from pma.requests.stock_list import build_stock_list_request
 from pma.responses import ResponseTypes
 from pma.use_cases.stock_list import stock_list_use_case
@@ -18,14 +17,6 @@ STATUS_CODES = {
     ResponseTypes.SYSTEM_ERROR: 500
 }
 
-postgres_configuration = {
-    "POSTGRES_USER": os.environ["POSTGRES_USER"],
-    "POSTGRES_PASSWORD": os.environ["POSTGRES_PASSWORD"],
-    "POSTGRES_HOSTNAME": os.environ["POSTGRES_HOSTNAME"],
-    "POSTGRES_PORT": os.environ["POSTGRES_PORT"],
-    "APPLICATION_DB": os.environ["APPLICATION_DB"],
-}
-
 
 @router.get('/stocks', response_model=List[StockModel])
 def stock_list(request: Request):
@@ -37,7 +28,7 @@ def stock_list(request: Request):
 
     request_object = build_stock_list_request(filters=qrystr_params['filters'])
 
-    repo = PostgresRepo(postgres_configuration)
+    repo = RepositoryRegistry.get_for('stock')
     result = stock_list_use_case(repo, request_object)
 
     return result.value
