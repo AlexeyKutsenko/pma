@@ -1,3 +1,5 @@
+from threading import Lock
+
 from pma import domain
 from pma.repository import orm
 from pma.repository.repos import RepoFactory
@@ -7,11 +9,24 @@ class RepositoryNotFound(Exception):
     pass
 
 
-class RepositoryRegistry:
+class SingletonMeta(type):
+    _instances = {}
+    _lock: Lock = Lock()
+
+    def __call__(cls, *args, **kwargs):
+        with cls._lock:
+            if cls not in cls._instances:
+                instance = super().__call__(*args, **kwargs)
+                cls._instances[cls] = instance
+        return cls._instances[cls]
+
+
+class RepositoryRegistry(metaclass=SingletonMeta):
     repositories = {}
 
     @classmethod
     def register(cls, _type, repo):
+        print(_type, repo)
         cls.repositories[_type] = repo
 
     @classmethod
